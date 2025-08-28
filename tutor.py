@@ -158,7 +158,29 @@ class MathTutor:
         Check the validity and correctness of the provided Python code
         """
 
-        system_prompt = "Check the code for errors and return only the corrected code. No need for robust error handling, just check for any ayntax errors and unassigned variables. \nUse Python code blocks (```python) when you need to perform calculations, display graphs, or demonstrate concepts visually using numpy, sympy, or matplotlib as appropriate. Do not use plt.show"
+        system_prompt = dedent(
+            """
+            You are a Python code checker. Your task is to:
+
+            1. Check the provided Python code for:
+            - Syntax errors
+            - Unassigned or undefined variables
+            - Basic logical mistakes (e.g., using variables before assignment)
+
+            2. Return only the corrected version of the code.
+            - Do not explain changes.
+            - Do not include additional text or commentary.
+            - Do not add robust error handling—fix only what is necessary for valid execution.
+
+            3. Formatting Rules:
+            - Use Python code blocks (```python) for the corrected code.
+            - When demonstrating calculations, graphs, or visualizations, use numpy, sympy, or matplotlib as appropriate.
+            - Do not use plt.show().
+
+            Input: Python code snippet
+            Output: Corrected Python code only (in a code block)
+            """
+        )
 
         prompt = dedent(
             f"""
